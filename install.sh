@@ -6,8 +6,11 @@ RESET="\033[0m"
 
 echo -e "${GREEN}[+] Setting up local WiFuX environment...${RESET}"
 
+echo -e "${GREEN}[+] Installing required packages...${RESET}"
+pkg install -y tsu python wpa-supplicant pixiewps iw root-repo 2>/dev/null
+
 echo -e "${GREEN}[+] Installing Python dependencies...${RESET}"
-pip install -r requirements.txt --break-system-packages
+pip install -r requirements.txt --break-system-packages 2>/dev/null || pip install -r requirements.txt
 
 chmod +x decompiled_source.py
 
@@ -23,7 +26,7 @@ cd "$SCRIPT_DIR" || exit
 
 # Update Logic
 if [ "\$1" == "update" ]; then
-    echo -e "\033[1;32m[+] Fetching latest updates from MSR's GitHub...\033[0m"
+    echo -e "\033[1;32m[+] Fetching latest updates...\033[0m"
     git reset --hard HEAD > /dev/null 2>&1
     git pull origin main
     
@@ -37,9 +40,9 @@ fi
 
 # Run Logic
 if [ -z "\$1" ]; then
-    sudo python decompiled_source.py -i wlan0 -K
+    tsu -c "python decompiled_source.py -i wlan0 -K"
 else
-    sudo python decompiled_source.py "\$@"
+    tsu -c "python decompiled_source.py \$@"
 fi
 EOF
 
