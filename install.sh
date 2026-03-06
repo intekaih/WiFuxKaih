@@ -9,7 +9,7 @@ echo -e "${GREEN}[+] Setting up local WiFuX environment...${RESET}"
 echo -e "${GREEN}[+] Installing Python dependencies...${RESET}"
 pip install -r requirements.txt --break-system-packages
 
-chmod +x main.py
+chmod +x decompiled_source.py
 
 echo -e "${GREEN}[+] Setting up 'wifux' command...${RESET}"
 
@@ -30,16 +30,16 @@ if [ "\$1" == "update" ]; then
     echo -e "\033[1;32m[+] Checking for new requirements...\033[0m"
     pip install -r requirements.txt --break-system-packages > /dev/null 2>&1
     
-    chmod +x main.py
+    chmod +x decompiled_source.py
     echo -e "\033[1;32m[✓] WiFuX updated successfully!\033[0m"
     exit 0
 fi
 
 # Run Logic
 if [ -z "\$1" ]; then
-    sudo python main.py -i wlan0 -K
+    sudo python decompiled_source.py -i wlan0 -K
 else
-    sudo python main.py "\$@"
+    sudo python decompiled_source.py "\$@"
 fi
 EOF
 
